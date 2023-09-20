@@ -15,20 +15,30 @@ const App = () => {
   ]
    
   const [selected, setSelected] = useState(0)
-  
   const SetPage = () => {
     let x = Math.floor(Math.random() * anecdotes.length)
-    console.log(x)
     setSelected(x)
+  }
+  
+  let startArray = [0,0,0,0,0,0,0,0]
+  const [points, setPoints] = useState(startArray)
+
+  const PointHandler = () => {
+    const temp = {...points}
+    temp[selected] += 1
+    console.log(temp)
+    setPoints(temp)
   }
 
   return (
     <div>
       <div>
-        {anecdotes[selected]}
+        <p>{anecdotes[selected]}</p>
+        <p>Has {points[selected]} votes!</p>
       </div>
       <div>
         <Button handleClick={SetPage} text="Next Anecdote"/>
+        <Button handleClick={PointHandler} text="Vote for Anecdote"/>
       </div>
     </div>
   )
