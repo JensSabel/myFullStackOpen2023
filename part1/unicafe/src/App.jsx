@@ -2,7 +2,28 @@ import { useState } from 'react'
 
 const Header = props => <h1>{props.text}</h1>
 const Button = props => <button onClick={props.handleClick}>{props.text}</button>
-const Statistics = props => <p>{props.text}: {props.score}</p>
+
+const StatisticsLine = props => <p>{props.text}: {props.score}</p>
+const Statistics = (props) => {
+  const good = props.good
+  const neutral = props.neutral
+  const bad = props.bad 
+
+  const total = good + neutral + bad
+  const average = (good - bad)/total
+  const positive = good/total * 100 + "%"
+
+  return (
+    <div>
+      <StatisticsLine text="Good" score={good}/>
+      <StatisticsLine text="Neutral" score={neutral}/>
+      <StatisticsLine text="Bad" score={bad}/>
+      <StatisticsLine text="All" score={total}/>
+      <StatisticsLine text="Average" score={average}/>
+      <StatisticsLine text="Positive" score={positive}/>
+    </div>
+  )
+}
 
 const App = () => {
   const [good, setGood] = useState(0)
@@ -12,9 +33,6 @@ const App = () => {
   const HandlePositive = () => setGood(good+1)
   const HandleNeutral = () => setNeutral(neutral+1)
   const HandleBad = () => setBad(bad+1)
-  const total = good + neutral + bad
-  const average = (good - bad)/total
-  const positive = good/total * 100 + "%"
 
   return (
     <div>
@@ -26,12 +44,7 @@ const App = () => {
       </div>
       <div>
         <Header text="Statistics"/>
-        <Statistics text="Good" score={good}/>
-        <Statistics text="Neutral" score={neutral}/>
-        <Statistics text="Bad" score={bad}/>
-        <Statistics text="All" score={total}/>
-        <Statistics text="Average" score={average}/>
-        <Statistics text="Positive" score={positive}/>
+        <Statistics good={good} neutral={neutral} bad={bad}/>
       </div>
     </div>
   )
