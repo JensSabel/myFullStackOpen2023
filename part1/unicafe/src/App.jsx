@@ -3,7 +3,7 @@ import { useState } from 'react'
 const Header = props => <h1>{props.text}</h1>
 const Button = props => <button onClick={props.handleClick}>{props.text}</button>
 //Components separated as per instructed in Exercise 1.10
-const StatisticsLine = props => <p>{props.text}: {props.score}</p>
+const StatisticsLine = props => <tr><td>{props.text}: {props.score}</td></tr>
 const Statistics = (props) => {
   const good = props.good
   const neutral = props.neutral
@@ -21,12 +21,16 @@ const Statistics = (props) => {
 
   return (
     <div>
-      <StatisticsLine text="Good" score={good}/>
-      <StatisticsLine text="Neutral" score={neutral}/>
-      <StatisticsLine text="Bad" score={bad}/>
-      <StatisticsLine text="All" score={total}/>
-      <StatisticsLine text="Average" score={average}/>
-      <StatisticsLine text="Positive" score={positive}/>
+      <table>
+        <tbody>
+          <StatisticsLine text="Good" score={good}/>
+          <StatisticsLine text="Neutral" score={neutral}/>
+          <StatisticsLine text="Bad" score={bad}/>
+          <StatisticsLine text="All" score={total}/>
+          <StatisticsLine text="Average" score={average}/>
+          <StatisticsLine text="Positive" score={positive}/>
+        </tbody>
+      </table>
     </div>
   )
 }
