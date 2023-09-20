@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 const Header = props => <h1>{props.text}</h1>
 const Button = props => <button onClick={props.handleClick}>{props.text}</button>
-
+//Components separated as per instructed in Exercise 1.10
 const StatisticsLine = props => <p>{props.text}: {props.score}</p>
 const Statistics = (props) => {
   const good = props.good
