@@ -26,11 +26,6 @@ const course = {
       name: 'Example course',
       exercises: 2,
       id: 4
-    },
-    {
-      name: 'Another Example',
-      exercises: 5,
-      id: 5
     }
   ]
 }
