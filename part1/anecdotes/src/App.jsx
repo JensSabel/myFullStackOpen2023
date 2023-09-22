@@ -1,6 +1,35 @@
 import { useState } from 'react'
 
-const Button = (props) => <button onClick={props.handleClick}>{props.text}</button>
+const Button = props => <button onClick={props.handleClick}>{props.text}</button>
+const Header = props => <h1>{props.text}</h1>
+
+const Favourite = (props) => {
+  let max = 0
+  let bigIndex = null
+  const keys = Object.keys(props.array)
+  
+  let i
+  for (i = 0; i < keys.length; i++) {
+    const value = props.array[keys[i]]
+    if(value > max) {
+      max = value
+      bigIndex = i
+    }
+  }
+  
+  if(bigIndex === null){
+    return(
+      <p>No votes given today!</p>
+    )
+  } else {
+    return(
+      <div>
+        <p>{props.anecdotes[bigIndex]}</p>
+        <p>Has {props.array[bigIndex]} votes!</p>
+      </div>
+    )
+  }
+}
 
 const App = () => {
   const anecdotes = [
@@ -20,25 +49,27 @@ const App = () => {
     setSelected(x)
   }
   
-  let startArray = [0,0,0,0,0,0,0,0]
-  const [points, setPoints] = useState(startArray)
-
+  const [points, setPoints] = useState([0,0,0,0,0,0,0,0])
   const PointHandler = () => {
     const temp = {...points}
     temp[selected] += 1
-    console.log(temp)
     setPoints(temp)
   }
 
   return (
     <div>
       <div>
+        <Header text="Anecdote of the Day"/>
         <p>{anecdotes[selected]}</p>
         <p>Has {points[selected]} votes!</p>
       </div>
       <div>
         <Button handleClick={SetPage} text="Next Anecdote"/>
         <Button handleClick={PointHandler} text="Vote for Anecdote"/>
+      </div>
+      <div>
+        <Header text="Anecdote with the most votes"/>
+        <Favourite array={points} anecdotes={anecdotes}/>
       </div>
     </div>
   )
