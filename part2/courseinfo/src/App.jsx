@@ -19,13 +19,16 @@ const Content = ({ parts }) =>
       )}
   </div>
 
-
 const Course = ({ course }) => {
   return(
     <div>
-      <Header course={course.name}/>
-      <Content parts={course.parts}/>
-      <Total sum={course.parts}/>
+    {course.map( course =>
+      <div key={course.id}>
+        <Header course={course.name}/>
+        <Content parts={course.parts}/>
+        <Total sum={course.parts}/>
+      </div>
+      )}
     </div>
   )
 }
