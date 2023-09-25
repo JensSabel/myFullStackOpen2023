@@ -16,9 +16,18 @@ const App = () => {
       id: persons.length + 1,
       name: newName
     }
+    
+    let i
+    for (i = 0; i < persons.length; i++) {
+      if (persons[i].name === nameObject.name) {
+        alert(`${newName} is already added to phonebook`)
+        return(setNewName('')) //Removes the already existing name from input-field
+      } 
+    } 
 
     setPersons(persons.concat(nameObject))
     setNewName('')
+    
   }
 
   const handleAddName = (event) => {
@@ -31,7 +40,7 @@ const App = () => {
       <h2>Phonebook</h2>
       <form onSubmit={addPerson}>
         <div>
-          name: <input 
+          Name: <input 
             value={newName}
             onChange={handleAddName}
             />
