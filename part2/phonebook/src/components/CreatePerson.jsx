@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import axios from 'axios'
+import personService from '../services/ServicePerson'
 
-const CreatePerson = ({ persons, setPersons, setFilter, filter, urlBase}) => {
+const CreatePerson = ({ persons, setPersons, setFilter, filter}) => {
     
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
@@ -27,11 +27,11 @@ const CreatePerson = ({ persons, setPersons, setFilter, filter, urlBase}) => {
           } 
         }
         
-        axios
-            .post(urlBase, nameObject)
+        personService
+            .create(nameObject)
             .then(response => {
-                setPersons(persons.concat(response.data))
-                setFilter(filter.concat(response.data))
+                setPersons(persons.concat(response))
+                setFilter(filter.concat(response))
                 console.log('Promised Post Completed')
             })
         

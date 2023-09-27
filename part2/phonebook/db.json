@@ -24,6 +24,16 @@
       "id": 5,
       "name": "Jens Sabel",
       "number": "045-1111111"
+    },
+    {
+      "id": 6,
+      "name": "S-Market",
+      "number": "12-415161"
+    },
+    {
+      "id": 7,
+      "name": "Testperson",
+      "number": "123-456789"
     }
   ]
 }

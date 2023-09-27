@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import personService from './services/ServicePerson'
 
 import ShowPeople from './components/ShowPeople'
 import Filter from './components/Filter'
@@ -8,16 +8,13 @@ import CreatePerson from './components/CreatePerson'
 const App = () => {
   const [persons, setPersons] = useState([])
   const [filter, setFilter] = useState(persons)
-  const urlBase = 'http://localhost:3001/persons'
 
   useEffect(() => {
-    axios
-      .get(urlBase)
+    personService
+      .getAll()
       .then(response => {
-        console.log("Promise fullfilled")
-        setPersons(response.data)
-        setFilter(response.data)
-        console.log(persons)
+        setPersons(response)
+        setFilter(response)
       })
   }, [])
 
@@ -30,7 +27,6 @@ const App = () => {
                     setPersons={setPersons}
                     setFilter={setFilter} 
                     filter={filter}
-                    urlBase={urlBase}
                     />
       <h2>Numbers</h2>
       <ShowPeople persons={filter}/>
