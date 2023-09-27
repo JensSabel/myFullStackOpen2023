@@ -8,10 +8,11 @@ import CreatePerson from './components/CreatePerson'
 const App = () => {
   const [persons, setPersons] = useState([])
   const [filter, setFilter] = useState(persons)
+  const urlBase = 'http://localhost:3001/persons'
 
   useEffect(() => {
     axios
-      .get('http://localhost:3001/persons')
+      .get(urlBase)
       .then(response => {
         console.log("Promise fullfilled")
         setPersons(response.data)
@@ -29,6 +30,7 @@ const App = () => {
                     setPersons={setPersons}
                     setFilter={setFilter} 
                     filter={filter}
+                    urlBase={urlBase}
                     />
       <h2>Numbers</h2>
       <ShowPeople persons={filter}/>

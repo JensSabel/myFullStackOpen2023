@@ -1,6 +1,7 @@
 import { useState } from 'react'
+import axios from 'axios'
 
-const CreatePerson = ({ persons, setPersons, setFilter, filter}) => {
+const CreatePerson = ({ persons, setPersons, setFilter, filter, urlBase}) => {
     
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
@@ -19,16 +20,21 @@ const CreatePerson = ({ persons, setPersons, setFilter, filter}) => {
         for (i = 0; i < persons.length; i++) {
           if (persons[i].name === nameObject.name) {
             alert(`${newName} is already added to phonebook`)
-            return(
+            return( 
               setNewName(''),
               setNewNumber('')
               ) 
           } 
-        } 
-        //If person is not found already the person gets added
-        setPersons(persons.concat(nameObject))
-        //To update the temp array used to show contacts on-page
-        setFilter(filter.concat(nameObject))
+        }
+        
+        axios
+            .post(urlBase, nameObject)
+            .then(response => {
+                setPersons(persons.concat(response.data))
+                setFilter(filter.concat(response.data))
+                console.log('Promised Post Completed')
+            })
+        
         //Cleanup 
         setNewName('')
         setNewNumber('')
