@@ -9,36 +9,42 @@ const CreatePerson = ({ persons, setPersons, setFilter, filter}) => {
     const addPerson = (event) => {
         event.preventDefault()
         console.log('button clicked ', event.target)
-    
+
+        let existingPersonIndex = persons.findIndex((persons) => persons.name === newName);
+        
         const nameObject = {
           id: persons.length + 1,
           name: newName,
           number: newNumber
         }
-        
-        let i
-        for (i = 0; i < persons.length; i++) {
-          if (persons[i].name === nameObject.name) {
-            alert(`${newName} is already added to phonebook`)
-            return( 
-              setNewName(''),
-              setNewNumber('')
-              ) 
-          } 
-        }
-        
-        personService
+
+        if (existingPersonIndex !== -1) {
+          if (window.confirm(`${nameObject.name} is already added to the phonebook, replace the old number with the new one?`)) {
+          
+            personService
+            .updatePerson(existingPersonIndex+1, nameObject)
+            .then(updatedPerson => {
+              const updatedPersons = [...persons];
+              updatedPersons[existingPersonIndex] = updatedPerson;
+
+              setPersons(updatedPersons);
+              setFilter(updatedPersons);
+              console.log("Updated contacts")
+            })
+          }
+        } else {
+          personService
             .create(nameObject)
             .then(response => {
                 setPersons(persons.concat(response))
                 setFilter(filter.concat(response))
                 console.log('Promised Post Completed')
             })
+        }
         
         //Cleanup 
         setNewName('')
         setNewNumber('')
-        
       }
     
       const handleAddName = (event) => {
