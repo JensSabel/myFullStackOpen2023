@@ -37,7 +37,10 @@ const App = () => {
                     filter={filter}
                     />
       <h2>Numbers</h2>
-      <ShowPeople persons={filter}/>
+      <ShowPeople persons={filter}
+                  setMessage={setMessage}
+                  setType={setType}
+                  />
     </div>
   )
 }
