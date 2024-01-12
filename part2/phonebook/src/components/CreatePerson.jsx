@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import personService from '../services/ServicePerson'
 
-const CreatePerson = ({ persons, setPersons, setFilter, filter}) => {
+
+const CreatePerson = ({ persons, setPersons, setFilter, setMessage, setType, filter}) => {
     
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
@@ -19,26 +20,34 @@ const CreatePerson = ({ persons, setPersons, setFilter, filter}) => {
         }
 
         if (existingPersonIndex !== -1) {
-          if (window.confirm(`${nameObject.name} is already added to the phonebook, replace the old number with the new one?`)) {
-          
+          if (window.confirm(`${nameObject.name} is already added to the phonebook, replace the old number with the new one?`)) {  
             personService
             .updatePerson(existingPersonIndex+1, nameObject)
             .then(updatedPerson => {
               const updatedPersons = [...persons];
               updatedPersons[existingPersonIndex] = updatedPerson;
-
+              setType("success")
+              setMessage(`Updated the number for: ${nameObject.name} successfully`)
               setPersons(updatedPersons);
               setFilter(updatedPersons);
               console.log("Updated contacts")
+              setTimeout(() => {
+                setMessage(null)
+              }, 5000)
             })
           }
         } else {
           personService
             .create(nameObject)
             .then(response => {
+                setType("success")
+                setMessage(`Added ${nameObject.name} successfully`)
                 setPersons(persons.concat(response))
                 setFilter(filter.concat(response))
                 console.log('Promised Post Completed')
+                setTimeout(() => {
+                  setMessage(null)
+                }, 5000)
             })
         }
         
